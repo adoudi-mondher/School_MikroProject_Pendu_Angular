@@ -9,3 +9,10 @@ import { Component } from '@angular/core';
 export class Game {
 
 }
+
+export class GameComponent {
+  private wordApi = inject(WordApiService);
+
+  // $ = c'est un Observable, le template fera | async
+  mot$ = this.wordApi.getRandomWord();
+}
