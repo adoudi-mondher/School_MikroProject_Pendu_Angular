@@ -15,3 +15,11 @@ export interface GameHistory {
   status: 'won' | 'lost';              // résultat final
   date: Date;                            // date de la partie
 }
+
+// Représente un mot retourné par l'API
+export interface ApiWord {
+  word: string;       // le mot
+  length: number;     // longueur du mot
+  category: string;   // catégorie (animals, sports, countries...)
+  language: string;   // langue (fr)
+}
