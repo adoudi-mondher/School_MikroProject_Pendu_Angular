@@ -1,1 +1,85 @@
-<app-hangman-draw [errors]="game.errors()" />
+<main class="main-grid">
+  <div class="game-layout">
+
+    <div class="game-area">
+
+      <!-- Dessin du pendu -->
+      <div class="hangman-container">
+        <app-hangman-draw [errors]="game.errors()" />
+      </div>
+
+      <!-- Mot à deviner -->
+      <div class="word-container">
+        <div class="word-display">
+          @for (lettre of game.word().split(''); track $index) {
+            <span class="letter-placeholder">
+              {{ game.guessedLetters().includes(lettre) ? lettre : '' }}
+            </span>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sidebar">
+
+      <!-- Lettres jouées -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Lettres jouées</h2>
+          <p class="hint-text">Tapez une lettre au clavier</p>
+          <div class="letters-container">
+            @for (lettre of game.guessedLetters(); track $index) {
+              <!-- Badge vert si bonne lettre, rouge sinon -->
+              <span class="badge badge-lg"
+                [class.badge-success]="game.word().includes(lettre)"
+                [class.badge-error]="!game.word().includes(lettre)">
+                {{ lettre.toUpperCase() }}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons actions -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Actions</h2>
+          <button class="btn btn-primary btn-block"
+            (click)="game.newGame()">
+            Nouvelle Partie
+          </button>
+          <a class="btn btn-outline btn-block"
+            routerLink="/history">
+            Historique des parties
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Modal fin de partie -->
+@if (game.status() !== 'playing') {
+  <dialog class="modal modal-open">
+    <div class="modal-box">
+
+      @if (game.status() === 'won') {
+        <h3 class="font-bold text-lg text-success">🎉 Bravo !</h3>
+        <p class="py-4">Tu as trouvé le mot <strong>{{ game.word() }}</strong> !</p>
+      } @else {
+        <h3 class="font-bold text-lg text-error">💀 Perdu !</h3>
+        <p class="py-4">Le mot était <strong>{{ game.word() }}</strong>.</p>
+      }
+
+      <div class="modal-action">
+        <button class="btn btn-primary"
+          (click)="game.newGame()">
+          Rejouer
+        </button>
+      </div>
+
+    </div>
+  </dialog>
+}
