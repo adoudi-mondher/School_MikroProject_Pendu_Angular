@@ -1,1 +1,37 @@
-<p>hangman-draw works!</p>
+<svg width="300" height="350" viewBox="0 0 300 350" class="stroke-primary">
+
+  <!-- La potence — toujours visible -->
+  <g class="opacity-30">
+    <line x1="20" y1="330" x2="180" y2="330" stroke-width="4" />
+    <line x1="50" y1="330" x2="50" y2="20" stroke-width="4" />
+    <line x1="50" y1="20" x2="150" y2="20" stroke-width="4" />
+    <line x1="150" y1="20" x2="150" y2="60" stroke-width="4" />
+  </g>
+
+  <!-- Erreur 1 → tête -->
+  @if (errors() >= 1) {
+    <circle cx="150" cy="90" r="30" fill="none" stroke-width="4" />
+  }
+
+  <!-- Erreur 2 → corps -->
+  @if (errors() >= 2) {
+    <line x1="150" y1="120" x2="150" y2="220" stroke-width="4" />
+  }
+
+  <!-- Erreur 3 → bras gauche -->
+  @if (errors() >= 3) {
+    <line x1="150" y1="140" x2="110" y2="180" stroke-width="4" />
+  }
+
+  <!-- Erreur 4 → bras droit -->
+  @if (errors() >= 4) {
+    <line x1="150" y1="140" x2="190" y2="180" stroke-width="4" />
+  }
+
+  <!-- Erreur 5 → jambes -->
+  @if (errors() >= 5) {
+    <line x1="150" y1="220" x2="110" y2="280" stroke-width="4" />
+    <line x1="150" y1="220" x2="190" y2="280" stroke-width="4" />
+  }
+
+</svg>

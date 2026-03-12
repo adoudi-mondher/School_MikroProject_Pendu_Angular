@@ -8,4 +8,6 @@ import { TopbarComponent } from "./components/topbar/topbar";
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {}
+export class App {
+
+}

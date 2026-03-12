@@ -1,18 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { GameService } from '../../services/game';
+import { HangmanDrawComponent } from "./hangman-draw/hangman-draw";
+import { TopbarComponent } from "../topbar/topbar";
 
 @Component({
   selector: 'app-game',
-  imports: [],
+  imports: [HangmanDrawComponent, TopbarComponent],
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
 export class Game {
-
-}
-
-export class GameComponent {
-  private wordApi = inject(WordApiService);
-
-  // $ = c'est un Observable, le template fera | async
-  mot$ = this.wordApi.getRandomWord();
+  game = inject(GameService);
 }
