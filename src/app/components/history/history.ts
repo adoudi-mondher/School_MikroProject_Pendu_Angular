@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { GameService } from '../../services/game';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-history',
-  imports: [],
+  imports: [RouterLink, DatePipe],
   templateUrl: './history.html',
-  styleUrl: './history.css',
+  styleUrl: './history.css'
 })
 export class History {
-
+  protected game = inject(GameService);
 }

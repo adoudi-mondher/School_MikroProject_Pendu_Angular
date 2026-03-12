@@ -1,1 +1,54 @@
-<p>history works!</p>
+<main class="main-grid">
+
+  <!-- Bouton retour -->
+  <a class="btn btn-outline mb-4" routerLink="/">
+    ← Retour au jeu
+  </a>
+
+  <h2 class="text-2xl font-bold mb-4">Historique des parties</h2>
+
+  <!-- Stats globales -->
+  <div class="stats shadow mb-6">
+    <div class="stat">
+      <div class="stat-title">Parties gagnées</div>
+      <div class="stat-value text-success">
+        {{ game.gameHistory().filter(p => p.status === 'won').length }}
+      </div>
+    </div>
+    <div class="stat">
+      <div class="stat-title">Parties perdues</div>
+      <div class="stat-value text-error">
+        {{ game.gameHistory().filter(p => p.status === 'lost').length }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Liste des parties -->
+  @if (game.gameHistory().length === 0) {
+    <p class="text-center opacity-50">Aucune partie jouée pour l'instant.</p>
+  } @else {
+    @for (partie of game.gameHistory(); track $index) {
+      <div class="card bg-base-200 shadow mb-3">
+        <div class="card-body">
+
+          <!-- Statut + mot -->
+          <div class="flex justify-between items-center">
+            <h3 class="card-title">{{ partie.word.toUpperCase() }}</h3>
+            <span class="badge badge-lg"
+              [class.badge-success]="partie.status === 'won'"
+              [class.badge-error]="partie.status === 'lost'">
+              {{ partie.status === 'won' ? '✅ Gagné' : '❌ Perdu' }}
+            </span>
+          </div>
+
+          <!-- Détails -->
+          <p>Erreurs : {{ partie.errors }}/5</p>
+          <p>Lettres jouées : {{ partie.guessedLetters.join(', ').toUpperCase() }}</p>
+          <p class="text-sm opacity-50">{{ partie.date | date:'dd/MM/yyyy HH:mm' }}</p>
+
+        </div>
+      </div>
+    }
+  }
+
+</main>
