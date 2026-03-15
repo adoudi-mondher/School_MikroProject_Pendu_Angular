@@ -10,15 +10,19 @@
 
       <!-- Mot à deviner -->
       <div class="word-container">
-        <div class="word-display">
-          @for (lettre of game.word().split(''); track $index) {
-            <span class="letter-placeholder">
-              {{ game.guessedLetters().includes(lettre) ? lettre : '' }}
-            </span>
-          }
-        </div>
+        @if (game.isLoading()) {
+          <!-- Spinner DaisyUI pendant le chargement API -->
+          <span class="loading loading-dots loading-lg"></span>
+        } @else {
+          <div class="word-display">
+            @for (lettre of game.word().split(''); track $index) {
+              <span class="letter-placeholder">
+                {{ game.guessedLetters().includes(lettre) ? lettre : '' }}
+              </span>
+            }
+          </div>
+        }
       </div>
-
     </div>
 
     <div class="sidebar">

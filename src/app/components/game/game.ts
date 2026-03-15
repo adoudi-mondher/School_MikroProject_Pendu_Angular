@@ -1,10 +1,11 @@
 import { Component, inject, HostListener, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { GameService } from '../../services/game';
 import { HangmanDrawComponent } from './hangman-draw/hangman-draw';
 
 @Component({
   selector: 'app-game',
-  imports: [HangmanDrawComponent],
+  imports: [HangmanDrawComponent, RouterLink],
   templateUrl: './game.html',
   styleUrl: './game.css'
 })
@@ -24,6 +25,7 @@ export class GameComponent implements OnInit {
     // On accepte seulement les lettres a-z
     if (/^[a-z]$/.test(letter)) {
       this.game.guessLetter(letter);
+      
     }
   }
 }
