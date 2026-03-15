@@ -6,12 +6,19 @@
   <div class="flex-none gap-2">
     <div class="stats shadow">
 
-      <!-- Erreurs — se met à jour automatiquement via Signal -->
       <div class="stat stat-compact">
         <div class="stat-title">Erreurs</div>
-        <div class="stat-value text-2xl">
-          {{ game.errors() }}/5
-        </div>
+        <div class="stat-value text-2xl">{{ game.errors() }}/5</div>
+      </div>
+
+      <div class="stat stat-compact">
+        <div class="stat-title">Série</div>
+        <div class="stat-value text-2xl">{{ game.currentStreak() }}</div>
+      </div>
+
+      <div class="stat stat-compact">
+        <div class="stat-title">Record</div>
+        <div class="stat-value text-2xl">{{ game.bestRecord() }}</div>
       </div>
 
     </div>

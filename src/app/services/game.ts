@@ -22,6 +22,16 @@ export class GameService {
   // L'historique des parties terminées
   private history = signal<GameHistory[]>([]);
 
+  // Série de victoires consécutives en cours
+  private consecutiveWins = signal<number>(0);
+
+  // Meilleur record atteint
+  private record = signal<number>(0);
+
+  // On les expose en lecture seule pour les composants
+  readonly currentStreak = computed(() => this.consecutiveWins());
+  readonly bestRecord = computed(() => this.record());
+
   // Signals calculés automatiquement depuis state
   // Angular les met à jour tout seul quand state change
   readonly word = computed(() => this.state().word);
@@ -101,7 +111,6 @@ export class GameService {
   private saveToHistory(status: 'won' | 'lost'): void {
     const currentState = this.state();
 
-    // On crée l'objet historique de la partie terminée
     const gameRecord: GameHistory = {
       word: currentState.word,
       guessedLetters: currentState.guessedLetters,
@@ -110,8 +119,19 @@ export class GameService {
       date: new Date()
     };
 
-    // On ajoute la partie à l'historique existant
     this.history.update(h => [gameRecord, ...h]);
+
+    // Mise à jour de la série
+    if (status === 'won') {
+      this.consecutiveWins.update(n => n + 1);
+      // Si la série dépasse le record → on met à jour le record
+      if (this.consecutiveWins() > this.record()) {
+        this.record.set(this.consecutiveWins());
+      }
+    } else {
+      // Défaite → on remet la série à zéro
+      this.consecutiveWins.set(0);
+    }
   }
 }
 
